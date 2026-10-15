@@ -9,8 +9,7 @@ import (
 )
 
 func TestConcurrentBooking_ExactlyOneWins(t *testing.T) {
-	store := nil
-
+	store := NewMemoryStore()
 	svc := NewService(store)
 
 	const numGoroutines = 100_000
@@ -33,7 +32,7 @@ func TestConcurrentBooking_ExactlyOneWins(t *testing.T) {
 			})
 			if err == nil {
 				successes.Add(1)
-			} else {    
+			} else {
 				failures.Add(1)
 			}
 		}(i)
